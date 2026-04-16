@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loopfuse"
+version = "0.2.0"
+description = "Agent-loop-aware kernel fusion and compiler optimization for LLM inference"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+keywords = ["llm", "inference", "compiler", "agents", "triton", "cuda", "tpu"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch>=2.2.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+triton = ["triton>=2.3.0"]
+tpu    = ["jax>=0.4.25"]
+dev    = ["pytest>=7.0", "pytest-cov", "ruff", "scipy", "matplotlib"]
+all    = ["triton>=2.3.0", "scipy", "matplotlib"]
+
+[project.urls]
+Homepage   = "https://github.com/your-org/loopfuse"
+Repository = "https://github.com/your-org/loopfuse"
+Paper      = "https://arxiv.org/abs/XXXX.XXXXX"
+
+[tool.pytest.ini_options]
+testpaths   = ["loopfuse/tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+markers = [
+    "gpu:  requires CUDA GPU",
+    "tpu:  requires Google TPU",
+    "slow: slow test (>5s)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501", "F401", "E741"]
+
+[tool.coverage.run]
+source = ["loopfuse"]
+omit   = ["loopfuse/tests/*", "loopfuse/notebooks/*", "loopfuse/paper/*"]
