@@ -1,0 +1,87 @@
+[
+  {
+    "n_steps": 5,
+    "tool_latency": 50,
+    "device": "cpu",
+    "phases": {
+      "prefill": 138.53962600001068,
+      "decode": 2537.3709289999624,
+      "kv_write": 2.6325579999593174,
+      "tool_io": 200.0,
+      "json_parse": 0.3012959998613951,
+      "prompt_build": 0.03998299962404417
+    },
+    "total_ms": 2878.884391999418,
+    "idle_ms": 200.34127899948544,
+    "idle_pct": 6.958990071162467,
+    "h1_confirmed": false
+  },
+  {
+    "n_steps": 5,
+    "tool_latency": 100,
+    "device": "cpu",
+    "phases": {
+      "prefill": 147.9929050001374,
+      "decode": 2511.335645999452,
+      "kv_write": 2.8528450000067096,
+      "tool_io": 400.0,
+      "json_parse": 0.3363610001088091,
+      "prompt_build": 0.04477399988900288
+    },
+    "total_ms": 3062.562530999594,
+    "idle_ms": 400.3811349999978,
+    "idle_pct": 13.0734027778142,
+    "h1_confirmed": false
+  },
+  {
+    "n_steps": 5,
+    "tool_latency": 150,
+    "device": "cpu",
+    "phases": {
+      "prefill": 96.3524700000562,
+      "decode": 2531.883961998574,
+      "kv_write": 2.6140090003536898,
+      "tool_io": 600.0,
+      "json_parse": 0.24207399974329746,
+      "prompt_build": 0.03646699974524381
+    },
+    "total_ms": 3231.128981998472,
+    "idle_ms": 600.2785409994885,
+    "idle_pct": 18.577981391142508,
+    "h1_confirmed": false
+  },
+  {
+    "n_steps": 5,
+    "tool_latency": 250,
+    "device": "cpu",
+    "phases": {
+      "prefill": 107.07736399990608,
+      "decode": 2556.2928810002177,
+      "kv_write": 2.6331950000439974,
+      "tool_io": 1000.0,
+      "json_parse": 0.3020990002369217,
+      "prompt_build": 0.03414699995119008
+    },
+    "total_ms": 3666.339686000356,
+    "idle_ms": 1000.3362460001881,
+    "idle_pct": 27.28433074054478,
+    "h1_confirmed": false
+  },
+  {
+    "n_steps": 5,
+    "tool_latency": 500,
+    "device": "cpu",
+    "phases": {
+      "prefill": 100.86956700001792,
+      "decode": 2567.4248830002853,
+      "kv_write": 43.772931999910725,
+      "tool_io": 2000.0,
+      "json_parse": 0.2890510002089286,
+      "prompt_build": 0.04295500025364163
+    },
+    "total_ms": 4712.3993880006765,
+    "idle_ms": 2000.3320060004626,
+    "idle_pct": 42.4482697942362,
+    "h1_confirmed": true
+  }
+]

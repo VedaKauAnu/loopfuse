@@ -1,0 +1,82 @@
+# .github/workflows/ci.yml
+# LoopFuse CI: runs on every push and PR.
+# CPU-only tests execute on the free GitHub runner.
+# GPU tests are skipped (they run on Colab).
+
+name: LoopFuse CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-cpu:
+    name: CPU unit tests (no GPU required)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install pytest pytest-cov numpy scipy matplotlib
+          pip install -e .
+
+      - name: Run CPU unit tests
+        run: |
+          python -m pytest loopfuse/tests/ \
+            -v --tb=short \
+            -m "not gpu and not tpu" \
+            --cov=loopfuse --cov-report=term-missing \
+            --cov-fail-under=70
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: matrix.python-version == '3.11'
+        with:
+          name: coverage-report
+          path: htmlcov/
+
+  lint:
+    name: Style check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint
+        run: ruff check loopfuse/ --select E,F,W --ignore E501,F401,E741
+
+  notebook-smoke:
+    name: Notebook smoke test (CPU, no GPU)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install numpy scipy matplotlib
+          pip install -e .
+      - name: Run notebook 00 (setup check)
+        run: python loopfuse/notebooks/00_setup.py
+      - name: Run notebook 02 (IR demo, CPU-only)
+        run: python loopfuse/notebooks/02_ir_demo.py
